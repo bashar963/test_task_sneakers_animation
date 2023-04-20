@@ -20,12 +20,14 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     final cartCubit = BlocProvider.of<CartCubit>(context);
     cartCubit.assignListKey(listKey);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CartAppBar(),
       body: content(context),
       bottomNavigationBar: bottomContent(context),
     );
@@ -34,26 +36,19 @@ class _CartScreenState extends State<CartScreen> {
   Widget content(BuildContext context) {
     final cartCubit = BlocProvider.of<CartCubit>(context, listen: true);
 
-    return CustomScrollView(
-      slivers: [
-        const CartAppBar(),
-        SliverFillRemaining(
-          child: AnimatedList(
-            key: listKey,
-            initialItemCount: cartCubit.state.carts.length,
-            itemBuilder: (context, index, animation) {
-              if (cartCubit.state.carts.length == index) {
-                return const SizedBox.shrink();
-              }
-              return CartWidget(
-                key: UniqueKey(),
-                item: cartCubit.state.carts[index],
-                animation: animation,
-              );
-            },
-          ),
-        ),
-      ],
+    return AnimatedList(
+      key: listKey,
+      initialItemCount: cartCubit.state.carts.length,
+      itemBuilder: (context, index, animation) {
+        if (cartCubit.state.carts.length == index) {
+          return const SizedBox.shrink();
+        }
+        return CartWidget(
+          key: UniqueKey(),
+          item: cartCubit.state.carts[index],
+          animation: animation,
+        );
+      },
     );
   }
 

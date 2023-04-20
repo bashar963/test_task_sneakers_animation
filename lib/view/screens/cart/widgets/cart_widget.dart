@@ -48,7 +48,7 @@ class _CartWidgetState extends State<CartWidget>
     return SizeTransition(
       key: ValueKey(item.id),
       sizeFactor: Tween<double>(
-        begin: isRemove ? 0.2 : 0.6,
+        begin: isRemove ? 0.1 : 0.9,
         end: 1,
       ).animate(animation),
       child: Padding(

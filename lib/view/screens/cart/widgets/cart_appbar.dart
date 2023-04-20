@@ -5,16 +5,16 @@ import 'package:test_task/utils/app_theme.dart';
 import 'package:test_task/view/screens/cart/cart_cubit.dart';
 import 'package:test_task/view/widgets/bouncing_icon_button.dart';
 
-class CartAppBar extends StatelessWidget {
+class CartAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CartAppBar({Key? key}) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2);
 
   @override
   Widget build(BuildContext context) {
     final cartCubit = BlocProvider.of<CartCubit>(context, listen: true);
-    return SliverAppBar(
-      floating: true,
-      pinned: true,
-      snap: false,
+    return AppBar(
       leading: IconButton(
         onPressed: () {
           if (Navigator.canPop(context)) {
